@@ -1,58 +1,45 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include "Adafruit_SHT31.h"
+#include <Wire.h>  // Used for I2C
+#include <Adafruit_SHT31.h> // Used for SHT-30-D
+
+Adafruit_SHT31 env_0;  // I2C ADDR 0x44
+//Adafruit_SHT31 env_1;  // I2C ADDR 0x45
 
 bool enableHeater = false;
-uint8_t loopCnt = 0;
 
-Adafruit_SHT31 sht31 = Adafruit_SHT31();
+void setup(void)  // Setup code, runs once
+{
+  Serial.begin(9600);  // Serial speed 9600 baud
 
-void setup() {
-  Serial.begin(9600);
-
-  Serial.println("SHT31 test");
-  if (! sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
-    Serial.println("Couldn't find SHT31");
-    while (1) delay(1);
-  }
-
-  Serial.print("Heater Enabled State: ");
-  if (sht31.isHeaterEnabled())
+  Serial.println(env_0.begin(0x44) ? "Env Node A: connected" : "Env Node A: failed to initialize");
+  Serial.print("Heater State: ");
+  if (env_0.isHeaterEnabled())  // If heater is on print ENABLED
     Serial.println("ENABLED");
   else
     Serial.println("DISABLED");
-}
-
-
-void loop() {
-  float t = sht31.readTemperature();
-  float h = sht31.readHumidity();
-
-  if (! isnan(t)) {  // check if 'is not a number'
-    Serial.print("Temp *C = "); Serial.print(t); Serial.print("\t\t");
-  } else { 
-    Serial.println("Failed to read temperature");
-  }
-  
-  if (! isnan(h)) {  // check if 'is not a number'
-    Serial.print("Hum. % = "); Serial.println(h);
-  } else { 
-    Serial.println("Failed to read humidity");
+/*  
+  Serial.println(env_1.begin(0x45) ? "Env Node B: connected" : "Env Node B: failed to initialize");
+  Serial.print("Heater State: ");
+  if (env_1.isHeaterEnabled())  // If heater is on print ENABLED
+    Serial.println("ENABLED");
+  else
+    Serial.println("DISABLED");*/
   }
 
-  delay(1000);
+void loop(void)  // Loop code, runs on repeat
+{
+  float temp0, temp1, humid0, humid1;
 
-  // Toggle heater enabled state every 30 seconds
-  // An ~3.0 degC temperature increase can be noted when heater is enabled
-  if (++loopCnt == 30) {
-    enableHeater = !enableHeater;
-    sht31.heater(enableHeater);
-    Serial.print("Heater Enabled State: ");
-    if (sht31.isHeaterEnabled())
-      Serial.println("ENABLED");
-    else
-      Serial.println("DISABLED");
+  temp0 = env_0.readTemperature();
+  //temp1 = env_1.readTemperature();
 
-    loopCnt = 0;
-  }
+  humid0 = env_0.readHumidity();
+  //humid1 = env_1.readHumidity();
+
+  Serial.println("-----------------------------------------------------------");
+  Serial.print("Temp *C = "); Serial.print(temp0); Serial.print("\t\t");
+  Serial.print("Hum. % = "); Serial.println(humid0);
+  Serial.print("Temp *C = "); Serial.print(temp1); Serial.print("\t\t");
+  Serial.print("Hum. % = "); Serial.println(humid1);
+
+  delay(30000);
 }
