@@ -1,0 +1,8 @@
+engage fan
+	fan on fan off
+engage vent
+	vent on vent off
+if humid below x
+	engage fogger
+if temp below x
+	engage heater
