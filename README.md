@@ -1,16 +1,20 @@
 ## Equipment list
 
 1. Raspberry Pi 4
-2. 2560 Mega
-3. SHT30-D x2
-4. ADS1015 x4
-5. 4ch Relay
-6. outlets x2
+2. 2560 Mega MC
+3. DS3231 RTC 
+4. SHT30-D x2 Sensor
+5. ADS1015 x4 ADC
+6. AT24C32
+7. 4ch Relay
+8. outlets x2
 
 ## Modules in process
 
-- [ ] Envro Monitor
-- [ ] Soil Monitor
-- [ ] Irrigation Control
-- [ ] Enviro Control
-- [ ] Soil Sensor Calibration
+- [ ] Envro Monitor (SHT-30)
+- [ ] Soil Monitor (Cap)
+- [ ] Soil Monitor (Therm)
+- [ ] Real Time Clock (RTC)
+- [ ] Irrigation Control (Mot)
+- [ ] Enviro Control (Relay)
+- [ ] Soil Sensor Calibration (Soft)
