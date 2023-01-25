@@ -19,3 +19,40 @@
 - [ ] Enviro Control (Relay)
 - [ ] Soil Sensor Calibration (Soft)
 - [ ] Internal Monitoring Temp/Power
+
+## Process Flow
+
+# Enviro
+Read SHT-30, Temp = T
+if Temp > T
+Turn on HeatBulb
+
+Read SHT-30, Humid = H
+if Humid < H
+Turn on Fog
+if Humid > H
+Turn on Fan
+
+# Soil
+Read ADS1015, SoilCap = C
+if SoilCap < C
+Turn on IrgPump
+
+Read ADS1015, SoilTemp = S
+if SoilTemp < S
+Turn on TankHeat
+
+# pH
+Read pH sensor, pH = P
+if pH != P
+Adjust pH, pH Protocol
+
+# Nutrient
+Read RS-485
+UNKNOWN PROCESS
+
+# Subsystems
+
+Read RTC
+EEprom
+
