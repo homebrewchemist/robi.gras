@@ -27,6 +27,10 @@ Read SHT-30, Temp = T
 if Temp > T
 Turn on HeatBulb
 
+Read SPD-810, Press = P
+if Pressure < P
+Add Air Pressure UNKNOWN PROCESS
+
 Read SHT-30, Humid = H
 if Humid < H
 Turn on Fog
@@ -42,6 +46,7 @@ Read ADS1015, SoilTemp = S
 if SoilTemp < S
 Turn on TankHeat
 
+# Water
 # pH
 Read pH sensor, pH = P
 if pH != P
@@ -53,6 +58,7 @@ UNKNOWN PROCESS
 
 # Subsystems
 
+Initialize I2C
 Read RTC
 EEprom
 
